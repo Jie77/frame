@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.active {
+			width: 100px;
+			height: 100px;
+			background: green;
+		}
+	</style>
+</head>
+<body>
+<div id="app">
+	<p>{{message}}</p>
+	<p>{{remessage}}</p>
+	<input v-model="message"><br>
+	<button v-on:click="reverse">reverse</button>
+	<ul>
+		<li v-for="nums in arr">
+			{{nums.num}}
+		</li>
+	</ul>
+	<div v-bind:class="{ active: isActive }"></div>
+	<input v-model="isActive" />
+</div>
+</body>
+<script type="text/javascript" src="vue.js"></script>
+<script type="text/javascript">
+	new Vue({
+		el:'#app',
+		data:{
+			isActive:"",
+			message:"",
+			arr:[
+				{num:'one'},
+				{num:'two'},
+				{num:'three'}
+			]
+		},
+		methods:{
+			reverse:function(){
+				return this.message = this.message.split('').reverse().join('')
+			}
+		},
+		computed:{
+			remessage:function(){
+				return this.message.split('').reverse().join('');
+			}
+		}
+	})
+</script>
+</html>
