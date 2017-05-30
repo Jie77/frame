@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>learn-vue</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<div id="app">
+		<p>{{message}}</p>
+		<input type="text" v-model="message">
+	</div>
+	<script type="text/javascript" src="vue.js"></script>
+	<script type="text/javascript">
+		var eleDate = {
+			message:'hello world'
+		}
+		new Vue({
+			el:'#app',
+			data:eleDate
+		})
+	</script>
+</body>
+</html>
