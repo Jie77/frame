@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		*{
+			margin:0;
+			padding:0;
+		}
+		ul{
+			list-style:none;
+			overflow:hidden;
+			height:0px;
+			transition:all 1s ease-in-out;
+		}
+		li{
+			height:50px;
+			line-height:50px;
+			width:100px;
+			text-align:center;
+			background:green;
+			
+		}
+		input[type="checkbox"]{
+			display:none;
+		}
+		input[type="checkbox"]:checked ~ ul{
+			height:200px;
+		}
+	</style>
+</head>
+<body>
+<input type="checkbox" name="nav" id="togglebox">
+<label for="togglebox">show</label>
+<ul>
+	<li>jiangjie</li>
+	<li>jiangjie</li>
+	<li>jiangjie</li>
+</ul>
+</body>
+</html>
