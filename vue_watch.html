@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div id="app">
+	<p>Ask a question:</p>
+	<input type="text" name="question" v-model="question">
+	<p> {{answer}} </p>
+</div>
+</body>
+<script type="text/javascript" src="vue.js"></script>
+	<script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: '#app',
+		data: {
+			question: '',
+			answer: 'please input your question'
+		},
+		watch: {
+			question: function(){
+				this.answer = 'Waiting for you to stop typing';
+				this.getAnswer();
+			}
+		},
+		methods: {
+			getAnswer: _.debounce(
+				function(){
+					if(this.question.indexOf('?') === -1){
+						this.answer = 'Questions usually contain a question mark.';
+          					return ;
+					}
+					this.answer = 'Thinking...';
+					var vvv = this;
+					axios.get('https://yesno.wtf/api')
+					.then(function(res){
+						vvv.answer = _.capitalize(res.data.answer);
+					})
+					.catch(function(err){
+						vvv.answer = 'Error! Could not get answer';
+					})
+				},
+				500
+			)
+		}
+	})
+</script>
+</html>
