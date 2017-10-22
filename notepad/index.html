@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>notepad</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<header>
+		<h2>任务计划列表</h2>
+	</header>
+	<div class="main" id="main">
+		<h3>添加任务</h3>
+		<input type="text" name="Input" placeholder="+回车添加任务" v-model="todo" v-on:keyup.13="addList">
+		<nav>
+			<span class="left" v-show="!list.length">未添加任何任务</span>
+			<span class="left red" v-show="list.length">{{ unfinishNum }}个任务未完成</span>
+			<ul class="right">
+				<li v-for="item,index in navList" :class="{active:item.active}"><a :href="item.hash" @click="selectIndex(index)">{{ item.text }}</a></li>
+			</ul>
+		</nav>
+		<h3>任务列表</h3>
+		<ul class="list">
+			<label v-for="item in selectedList">
+				<li>
+					<input type="checkbox" name="check" v-model="item.finish">
+					<span :class="{completed:item.finish}">{{ item.text }}</span>
+					<button class="del" @click="delList(item)">X</button>
+				</li>
+			</label>
+		</ul>
+	</div>
+	
+	<script type="text/javascript" src="../vue.js"></script>
+	<script type="text/javascript">
+		var navList = [
+			{
+				text:"全部任务",
+				hash:"#all",
+				active:true
+			},
+			{
+				text:"已完成任务",
+				hash:"#finish",
+				active:false
+			},
+			{
+				text:"未完成任务",
+				hash:"#unfinish",
+				active:false
+			}
+		]
+
+		var hashList = {
+			all:function(list){
+				return list;
+			},
+			finish:function(list){
+				return list.filter(function(item){
+					return item.finish
+				})
+			},
+			unfinish:function(list){
+				return list.filter(function(item){
+					return !item.finish
+				})
+			}
+		}
+
+		var list = [
+			{
+				text:"hahahah",
+				finish:false
+			},
+			{
+				text:"jjjjjj",
+				finish:false
+			}
+		]
+
+		
+
+		var vm = new Vue({
+			el:"#main",
+			data:{
+				list:list,
+				todo:"",
+				hash:"all",
+				navList:navList
+			},
+			methods:{
+				addList(){
+					this.list.push({
+						text:this.todo,
+						finish:false
+					})
+					this.todo = ""
+				},
+				delList(item){
+					var index = this.list.indexOf(item)
+					this.list.splice(index,1)
+				},
+				selectIndex(index){
+					for (let i=0;i<this.navList.length;i++){
+						this.navList[i].active = false
+					}
+					this.navList[index].active = true
+				}
+			},
+			computed:{
+				unfinishNum:function(){
+					return this.list.filter(function(item){
+						return !item.finish
+					}).length
+				},
+				selectedList:function(){
+					return hashList[this.hash]?hashList[this.hash](this.list):this.list
+				}
+			}
+		})
+
+		function hashChange(){
+			var hash = window.location.hash.slice(1)
+			vm.hash = hash
+		}
+
+		hashChange()
+
+		window.addEventListener("hashchange",hashChange,false)
+
+	</script>
+</body>
+</html>

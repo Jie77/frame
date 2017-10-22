@@ -1,0 +1,129 @@
+*{
+	padding:0;
+	margin:0;
+}
+
+a{
+	text-decoration:none;
+	color:#000;
+	display:block;
+	width:100%;
+	height:100%;
+}
+
+body{
+	background:#fafafa;
+}
+
+header{
+	position:relative;
+	width:100%;
+	background:#EE5330;
+	color:#fff;
+}
+
+header h2,h3,input,nav{
+	width:60%;
+	margin:0 auto;
+	padding:10px 0;
+}
+
+input{
+	display:block;
+}
+
+nav{
+	position:relative;
+	height:60px;
+}
+
+nav .left{
+	position: absolute;
+	left:0;
+	width:25%;
+	height:60px;
+	line-height:60px;
+}
+
+nav .red{
+	color:red;
+}
+
+nav .right{
+	position: absolute;
+	right:0;
+	width:54%;
+}
+
+nav .right li{
+	width:32.3333%;
+	height:60px;
+	line-height:60px;
+	text-align:center;
+	list-style:none;
+	float:left;
+}
+
+nav .right li:hover{
+	background:#D3D0D0;
+}
+
+nav .right .active{
+	border:1px solid #8D8B8B;
+}
+
+.list{
+	position:relative;
+	width:60%;
+	margin:0 auto;
+}
+.list li{
+	position:relative;
+	width:100%;
+	list-style:none;
+	height:40px;
+	line-height:40px;
+	background:#fff;
+	border-bottom:1px solid #d9d9d9;
+}
+
+.list li:hover{
+	background:#fafafa;
+}
+
+.list li:hover .del{
+	display:block;
+}
+
+.list li input{
+	display:block;
+	width:30px;
+	height:30px;
+	position:absolute;
+	left:0;
+	margin:5px 0;
+}
+
+.list li span{
+	display:block;
+	position:absolute;
+	margin-left: 60px;
+	height:40px;
+	line-height:40px;
+	transition:all 0.3s ease-out;
+}
+
+.list li .completed{
+	color: #d9d9d9;
+    text-decoration: line-through;
+}
+
+.list li .del{
+	display:none;
+	position:absolute;
+	right:10px;
+	width:30px;
+	height:30px;
+	margin:5px 0;
+}
+
