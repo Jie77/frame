@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width initial-scale=1 minimum-scale=1 maximum-scale=1">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="../vue.js"></script>
+	<style type="text/css">
+		*{
+			padding:0;
+			margin:0;
+		}
+		html,body{
+			height:100%;
+			background:#fafafa;
+		}
+		header{
+			height:45px;
+			background:#2FF96C;
+		}
+		header .btn{
+			position:absolute;
+			width:31px;
+			height:31px;
+			margin:7px 0 7px 7px;
+		}
+		header .title{
+			position:absolute;
+			right:30px;
+			color:#fff;
+		}
+		.cover{
+			position:absolute;
+			top:44px;
+			width:100%;
+			height:100%;
+			background:#000;
+			opacity:0.2;
+			z-index:1;
+			display:none;
+		}
+		.main{
+			position:absolute;
+			top:45px;
+			width:100%;
+			height:100%;
+		}
+		.main aside{
+			position:absolute;
+			top:0;
+			background:#fff;
+			height:100%;
+			width:0;
+			overflow:hidden;
+			z-index:10;
+		}
+		.main aside .info{
+			width:100%;
+			height:20%;
+			background:#17F232;
+			position:relative;
+		}
+		.main aside .info .pic{
+			width:50px;
+			height:50px;
+			border:1px solid #666;
+			border-radius:50%;
+			overflow:hidden;
+			position:relative;
+			left:10px;
+			top:10px;
+		}
+		.main aside .info .simple_info{
+			position:absolute;
+			bottom:3px;
+		}
+		.main aside .info p{
+			margin-top:5px;
+		}
+		.main aside ul{
+			width:100%;
+			margin-top:20px;
+		}
+		.main aside ul li{
+			box-sizing:border-box;
+			width:300px;
+			height:45px;
+			line-height:45px;
+			padding-left:10px;
+		}
+		.main aside ul .active{
+			color:#17F232;
+		}
+		.main input{
+			display:block;
+			width:90%;
+			height:40px;
+			margin:20px auto;
+			border:1px solid #000;
+		}
+		.main .tip{
+			color:red;
+			margin-left:5%;
+		}
+		.main .list{
+			width:90%;
+			margin:10px auto;
+		}
+		.main .list li{
+			width:100%;
+			height:40px;
+			list-style:none;
+			padding-left:2px;
+			line-height:40px;
+			border-bottom:1px solid #fafafa;
+			background:#fff;
+			position:relative;
+		}
+
+		.main .list li input{
+			display:block;
+			width:30px;
+			height:30px;
+			position:absolute;
+			left:0;
+			margin:5px 0;
+		}
+
+		.main .list li span{
+			display:block;
+			position:absolute;
+			margin-left: 60px;
+			height:40px;
+			line-height:40px;
+			transition:all 0.3s ease-out;
+		}
+
+		.main .list li .completed{
+			color: #d9d9d9;
+		    text-decoration: line-through;
+		}
+
+		.main .list li .del{
+			display:block;
+			position:absolute;
+			right:10px;
+			width:30px;
+			height:30px;
+			margin:5px 0;
+		}
+
+	</style>
+</head>
+<body>
+	<header>
+		<button class="btn"></button>
+		<h1 class="title">便签</h1>
+	</header>
+		
+	<div id="cover" class="cover"></div>
+	<div class="main" id="main">
+		<aside>
+			<div class="info">
+				<div class="pic">
+					<img src="">
+				</div>
+				<div class="simple_info">
+					<p>1007172888</p>
+					<p>1007172888@hh.com</p>
+				</div>
+			</div>
+			<ul>
+				<li class="active">所有任务</li>
+				<li>已完成任务</li>
+				<li>未完成任务</li>
+			</ul>
+		</aside>
+		<input type="text" placeholder="+enter 添加任务" v-model="todo" v-on:keyup.13="addList()">
+		<span class="tip">剩余任务{{ unfinishNum }}个</span>
+		<ul class="list">
+			<label v-for="item in list">
+				<li>
+					<input type="checkbox" name="check" v-model="item.finish">
+					<span :class="{completed:item.finish}">{{ item.text }}</span>
+					<button class="del" @click="delList(item)">X</button>
+				</li>
+			</label>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		var is_show = false
+		$("button").click(function(){
+			if (!is_show){
+				$("aside").animate({width:"200px"},200)
+				$("#cover").css({display:"block"})
+				is_show = true
+			}else{
+				$("aside").animate({width:"0"},200)
+				$("#cover").css({display:"none"})
+				is_show = false
+			}
+		})
+
+		var list = [
+			{
+				text:"11111111111",
+				finish:false
+			},
+			{
+				text:"2222222222",
+				finish:false
+			},
+			{
+				text:"3333333333",
+				finish:false
+			}
+		]
+
+		var vm = new Vue({
+			el:"#main",
+			data:{
+				list:list,
+				todo:""
+			},
+			methods:{
+				addList(){
+					this.list.push({
+						text:this.todo,
+						finish:false
+					})
+					this.todo = ""
+				},
+				delList(item){
+					var index = this.list.indexOf(item)
+					this.list.splice(index,1)
+				}
+			},
+			computed:{
+				unfinishNum:function(){
+					return this.list.filter(function(item){
+						return !item.finish
+					}).length
+				}
+			}
+		})
+	</script>
+</body>
+</html>
